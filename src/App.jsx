@@ -12,7 +12,6 @@ function App() {
         <Routes>
           {/*route pour register !*/}
           <Route path='/register' element={<RegisterForm/>}/>
-          
           {/*si aucune route ne correspond -> register */}
           <Route path='*' element={<Navigate to="/register"/>}/>
         </Routes>

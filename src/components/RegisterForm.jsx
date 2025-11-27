@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { register } from "../services/api";
+import { useNavigate, Link } from "react-router-dom";
 
 function RegisterForm() {
     //etat pour stocker les valeur du form
@@ -9,6 +10,8 @@ function RegisterForm() {
     const [message, setMessage] = useState('');
     //etat pour savoir si on est en train d'envoyer une requeste
     const [loading, setLoading] = useState(false);
+    //hook pour naviguer vers une autre page
+    const navigate = useNavigate();
 
     //la function utilisé quand on soumet le formulaire
     async function handleSubmit(event) {
@@ -16,8 +19,22 @@ function RegisterForm() {
         event.preventDefault();
         //Je change le status du state loading
         setLoading(true);
-
-        alert('jesuisentrain de soumettre mon form');
+        setMessage('');
+        try {
+            //on appelant notre service api
+            const result = await register(email, password);
+            //on affiche un message de succes
+            setMessage('super frero, inscription réussit, éclate toi avec les injections sql')
+            //faire une redirection vers login
+            setTimeout(()=>{
+                navigate('/login');
+            }, 3000)
+        } catch (error) {
+            console.error('erreur', error);
+            setMessage(error.message);
+        }finally{
+            setLoading(false);
+        }
     }
 
     return (
@@ -26,11 +43,38 @@ function RegisterForm() {
 
             {/*formulaire avec la logique de submit*/}
             <form onSubmit={handleSubmit}>
-
-                <button type="submit">
+                <div>
+                    <label htmlFor="email">Email:</label>
+                    <input 
+                        type="email" 
+                        name="email" 
+                        id="email" 
+                        value={email} 
+                        onChange={(e)=>setEmail(e.target.value)} 
+                        required 
+                        disabled={loading}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="password">MDP:</label>
+                    <input 
+                        type="password"
+                        id="password"
+                        value={password} 
+                        onChange={(e)=>{setPassword(e.target.value)}}
+                        required
+                        disabled={loading}
+                    />
+                </div>
+                <button type="submit" disabled={loading}>
                     {loading ? 'Chargement' : 'sinscrire'}
                 </button>
             </form>
+
+            {/* afficher les message de succes et d'erreurs */}
+            {message}
+
+            <div>deja un compte ? <Link to={'/login'}>Se connecter</Link></div>
         </div>
     )
 }
