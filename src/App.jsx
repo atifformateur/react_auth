@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import RegisterForm from './components/RegisterForm';
+import LoginForm from './components/LoginForm';
 
 function App() {
 
@@ -12,8 +13,9 @@ function App() {
         <Routes>
           {/*route pour register !*/}
           <Route path='/register' element={<RegisterForm/>}/>
+          <Route path='/login' element={<LoginForm/>}/>
           {/*si aucune route ne correspond -> register */}
-          <Route path='*' element={<Navigate to="/register"/>}/>
+          <Route path='*' element={<Navigate to="/login"/>}/>
         </Routes>
       </BrowserRouter>  
     </>
