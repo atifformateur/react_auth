@@ -22,6 +22,10 @@ function LoginForm () {
             localStorage.setItem('token', result.token);
             //modifier le message de validation
             setMessage('connexion réussie');
+            //redirection apres 3 secondes
+            setTimeout(() => {
+                navigate('/profile')
+            }, 3000);
         } catch (error) {
             console.error('error', error);
             setMessage(error);

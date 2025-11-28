@@ -49,7 +49,7 @@ export async function login(email, password) {
 export async function getProfil(token) {
     //prepare la requete get sur la route api/auth/profil
     //pour les routes qui necessite une connexion, on doit passer dans le header le Token
-    const reponse = await fetch(`${API_URL}/api/auth/profil`, {
+    const response = await fetch(`${API_URL}/api/auth/profil`, {
         method: 'GET',
         headers: {
             'Content-Type' : 'application/json',
@@ -60,10 +60,10 @@ export async function getProfil(token) {
 
     const data = await response.json();
 
-    if(!reponse.ok) {
+    if(!response.ok) {
         throw new Error(data.error || 'erreur lors de la recuperation du profil')
     }
-
+    
     return data;
 }
 
