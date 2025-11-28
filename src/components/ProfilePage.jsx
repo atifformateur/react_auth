@@ -28,7 +28,7 @@ function ProfilePage() {
                 setUser(data.user);
 
             } catch (error) {
-                console.log('erreur', error);
+                console.error('erreur', error);
                 setError(error.message);
 
                 //gestion au cas ou le token est invalide ou introuvable
@@ -45,6 +45,11 @@ function ProfilePage() {
         //appel de ma function
         handleProfile();
     }, [navigate])
+
+    function handleLogout() {
+        localStorage.removeItem('token');
+        navigate('/login');
+    }
   
     if(loading){
         return(
@@ -64,6 +69,8 @@ function ProfilePage() {
                     <p>inscrit le: {new Date(user.created_at).toLocaleDateString()}</p>
                 </div>
             )}
+
+            <button onClick={handleLogout}>deco</button>
         </div>
     )
 }
