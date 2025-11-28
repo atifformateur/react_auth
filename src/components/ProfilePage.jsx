@@ -23,8 +23,10 @@ function ProfilePage() {
             try {
                 //on call l'api! function getProfile
                 const data = await getProfil(token);
-                console.log(data);    
+                
+                setUser(data.user);
 
+                setLoading(false);
             } catch (error) {
                 
             }
@@ -45,7 +47,13 @@ function ProfilePage() {
     return(
         <div>
             <h2>profile page</h2>
-            <div>roro@gmail.com toto</div>
+            {user && (
+                <div>
+                    <p>id: {user.id}</p>
+                    <p>email: {user.email}</p>
+                    <p>inscrit le: {new Date(user.created_at).toLocaleDateString()}</p>
+                </div>
+            )}
         </div>
     )
 }
