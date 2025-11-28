@@ -10,6 +10,7 @@ function ProfilePage() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
 
     //chargé au chargement de la page
     useEffect(()=>{
@@ -26,9 +27,18 @@ function ProfilePage() {
                 
                 setUser(data.user);
 
-                setLoading(false);
             } catch (error) {
-                
+                console.log('erreur', error);
+                setError(error.message);
+
+                //gestion au cas ou le token est invalide ou introuvable
+                if(error.message.includes('401') || error.message.includes('Token')){
+                    localStorage.removeItem('token');
+                    navigate('/login');
+                }
+
+            }finally{
+                setLoading(false);
             }
         }
 
