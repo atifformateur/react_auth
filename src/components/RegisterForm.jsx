@@ -6,6 +6,8 @@ function RegisterForm() {
     //etat pour stocker les valeur du form
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [birthDate , setBirthDate] = useState('');
+    const [birthPlace, setBirthPlace] = useState('');
     //etat pour stocker les messages d'erreur
     const [message, setMessage] = useState('');
     //etat pour savoir si on est en train d'envoyer une requeste
@@ -20,9 +22,12 @@ function RegisterForm() {
         //Je change le status du state loading
         setLoading(true);
         setMessage('');
+        console.log(email, password, birthDate, birthPlace);
+        
         try {
+
             //on appelant notre service api
-            const result = await register(email, password);
+            const result = await register(email, password, birthDate, birthPlace);
             //on affiche un message de succes
             setMessage('super frero, inscription réussit, éclate toi avec les injections sql')
             //faire une redirection vers login
@@ -63,6 +68,27 @@ function RegisterForm() {
                         value={password} 
                         onChange={(e)=>{setPassword(e.target.value)}}
                         required
+                        disabled={loading}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="birthDate">date de naissance</label>
+                    <input 
+                        type="date"
+                        id="birthDate"
+                        value={birthDate}
+                        onChange={(e)=> setBirthDate(e.target.value)}
+                        disabled={loading} 
+                    />
+                </div>
+                <div>
+                    <label htmlFor="birthPlace">lieu de naissance</label>
+                    <input 
+                        type="text" 
+                        id="birthPlace"
+                        value={birthPlace}
+                        onChange={(e)=> setBirthPlace(e.target.value)}
+                        placeholder="ville ( paris , lyon , new york, ...)"
                         disabled={loading}
                     />
                 </div>

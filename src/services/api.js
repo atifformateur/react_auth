@@ -2,7 +2,7 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
 // logique d'inscription 
-export async function register(email, password) {
+export async function register(email, password, birth_date, birth_place) {
     //faire la request POST sur la route /api/auth/register
     const response = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
@@ -10,7 +10,7 @@ export async function register(email, password) {
             'Content-Type' : 'application/json'
         },
         //passer les data au body
-        body: JSON.stringify({email, password}),
+        body: JSON.stringify({email, password, birth_date, birth_place}),
     });
 
     //parse la response json

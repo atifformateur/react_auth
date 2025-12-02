@@ -67,6 +67,8 @@ function ProfilePage() {
                     <p>id: {user.id}</p>
                     <p>email: {user.email}</p>
                     <p>inscrit le: {new Date(user.created_at).toLocaleDateString()}</p>
+                    <p>née le: {new Date(user.birth_date).toLocaleDateString()}</p>
+                    <p>née a: {user.birth_place}</p>
                 </div>
             )}
 
